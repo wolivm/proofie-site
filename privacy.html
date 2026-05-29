@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Privacy Policy — proofie</title>
+  <meta name="description" content="Privacy Policy for proofie, a Figma plugin that audits UI copy. Explains exactly what data is processed, who processes it, and how to delete it." />
+  <meta name="robots" content="index, follow" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #1a1a1f;
+      --muted: #55555f;
+      --rule: #e4e4ea;
+      --link: #1d4ed8;
+      --link-hover: #1530a0;
+      --accent: #6d28d9;
+      --card: #f7f7fa;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #15151a;
+        --fg: #ededf2;
+        --muted: #a8a8b3;
+        --rule: #2c2c34;
+        --link: #93b4ff;
+        --link-hover: #bcd0ff;
+        --accent: #c4a3ff;
+        --card: #1d1d24;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 17px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 64px;
+    }
+    header.site {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 32px;
+    }
+    .wordmark {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--fg);
+      text-decoration: none;
+    }
+    .wordmark .dot { color: var(--accent); }
+    .tagline {
+      font-size: 14px;
+      color: var(--muted);
+    }
+    h1 {
+      font-size: 30px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin: 0 0 6px;
+    }
+    .updated {
+      color: var(--muted);
+      font-size: 15px;
+      margin: 0 0 32px;
+    }
+    h2 {
+      font-size: 21px;
+      letter-spacing: -0.01em;
+      margin: 40px 0 10px;
+      padding-top: 8px;
+    }
+    h3 {
+      font-size: 17px;
+      margin: 24px 0 6px;
+    }
+    p { margin: 0 0 16px; }
+    a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+    a:hover { color: var(--link-hover); }
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+    ul { margin: 0 0 16px; padding-left: 22px; }
+    li { margin: 0 0 8px; }
+    .lead {
+      font-size: 18px;
+      color: var(--fg);
+    }
+    .callout {
+      background: var(--card);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 0 0 16px;
+    }
+    .callout p:last-child { margin-bottom: 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 16px;
+      font-size: 15.5px;
+    }
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--rule);
+    }
+    th {
+      font-weight: 600;
+      color: var(--fg);
+    }
+    td:first-child { white-space: nowrap; font-weight: 600; }
+    .tbl-wrap { overflow-x: auto; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.9em;
+      background: var(--card);
+      border: 1px solid var(--rule);
+      border-radius: 5px;
+      padding: 1px 5px;
+    }
+    footer.site {
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 15px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    footer.site nav { display: flex; gap: 16px; flex-wrap: wrap; }
+    footer.site .copyright { margin-left: auto; }
+    @media (max-width: 560px) {
+      footer.site .copyright { margin-left: 0; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="site">
+      <a class="wordmark" href="#top">proofie<span class="dot">.</span></a>
+      <span class="tagline">UX writing audit plugin for Figma</span>
+    </header>
+
+    <main id="top">
+      <h1>Privacy Policy</h1>
+      <p class="updated">Last updated: May 29, 2026</p>
+
+      <p class="lead">
+        proofie is a Figma plugin that reviews the writing in your designs and
+        suggests improvements. This policy explains exactly what data proofie
+        handles, who processes it, where it is stored, and how to delete it.
+        It is written in plain language and describes the real behavior of the
+        plugin — nothing is left vague or overstated.
+      </p>
+
+      <div class="callout">
+        <p><strong>The short version.</strong> proofie has no accounts and no
+        login. It does not collect your name, email, or any payment details. It
+        sends only two things to its backend for analysis: the text of the
+        layers you choose to audit, and any style-guideline documents you
+        upload. There is no advertising, no analytics, and no tracking. Your
+        data is never sold.</p>
+      </div>
+
+      <h2>1. Who runs proofie</h2>
+      <p>
+        proofie is an independent, single-developer project built and operated
+        by Willian Magalhaes as a capstone for the Andela Agentic AI
+        Accelerator. It is a personal/student project, not a company product.
+        For any privacy question, contact
+        <a href="mailto:iamwillian.magalhaes@gmail.com">iamwillian.magalhaes@gmail.com</a>.
+      </p>
+
+      <h2>2. What data proofie processes</h2>
+      <p>proofie processes only the data you explicitly hand to it:</p>
+      <ul>
+        <li>
+          <strong>Selected layer text.</strong> When you choose one or more
+          frames or text layers in Figma and run a check, proofie reads the
+          <em>text content</em> of those layers (the characters in them, plus
+          the layer name and basic context such as whether it looks like a
+          button or a heading) and sends that text to its backend to be
+          analyzed and rewritten.
+        </li>
+        <li>
+          <strong>Uploaded style guidelines and glossary terms.</strong> If you
+          upload a style guide document or add terminology in the Guidelines or
+          Terms tabs, the text of those documents and term lists is sent to the
+          backend so it can be indexed and used as the reference the audit
+          compares your copy against.
+        </li>
+      </ul>
+
+      <div class="callout">
+        <p>
+          <strong>What proofie does <u>not</u> collect.</strong> No names,
+          emails, usernames, or passwords. No payment or billing information.
+          No Figma account credentials. No contact lists. No location data. No
+          advertising identifiers. proofie does not read layers you did not
+          select for a check, and it does not scan your whole Figma file in the
+          background.
+        </p>
+      </div>
+
+      <h3>Local-only preferences</h3>
+      <p>
+        Your interface-language choice and light/dark theme are saved locally on
+        your own machine through Figma's plugin storage
+        (<code>figma.clientStorage</code>). These preferences stay on your
+        device and are never sent to the backend or to any third party.
+      </p>
+
+      <h2>3. Why proofie processes this data</h2>
+      <p>
+        The only purpose is to provide the plugin's core feature: analyzing your
+        selected UI copy for tone, clarity, accessibility, consistency, calls to
+        action, and localization, and proposing rewrites. Uploaded guidelines
+        are used solely to tailor that analysis to your own writing standards.
+        proofie does not use your content to train any model, build a profile of
+        you, or for any purpose other than returning the audit results you
+        requested.
+      </p>
+
+      <h2>4. Where your data goes — third-party processors</h2>
+      <p>
+        proofie's plugin talks to a single backend service over an encrypted
+        HTTPS connection. That backend is hosted on
+        <strong>Hugging Face Spaces</strong> at
+        <code>https://uxwillian-proofie.hf.space</code>. To do its job, the
+        backend forwards your data to a small set of independent third-party AI
+        and infrastructure providers. Each is its own data processor governed by
+        its own privacy policy:
+      </p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Provider</th><th>What it receives</th><th>Why</th><th>Their policy</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Anthropic</td>
+              <td>The selected layer text and your guideline excerpts</td>
+              <td>Runs the Claude (Haiku) model that analyzes the copy and writes the suggestions</td>
+              <td><a href="https://www.anthropic.com/legal/privacy" rel="noopener noreferrer" target="_blank">anthropic.com/legal/privacy</a></td>
+            </tr>
+            <tr>
+              <td>Voyage AI</td>
+              <td>The text of your copy and uploaded guidelines</td>
+              <td>Turns text into numeric embeddings so relevant guideline passages can be matched</td>
+              <td><a href="https://www.voyageai.com/" rel="noopener noreferrer" target="_blank">voyageai.com</a></td>
+            </tr>
+            <tr>
+              <td>Pinecone</td>
+              <td>Embeddings and text of your uploaded guidelines and glossary terms</td>
+              <td>Vector database that stores and retrieves your guidelines so the audit can reference them</td>
+              <td><a href="https://www.pinecone.io/privacy/" rel="noopener noreferrer" target="_blank">pinecone.io/privacy</a></td>
+            </tr>
+            <tr>
+              <td>Hugging Face</td>
+              <td>Hosts the backend; handles the network traffic that passes through it</td>
+              <td>Cloud platform the backend runs on</td>
+              <td><a href="https://huggingface.co/privacy" rel="noopener noreferrer" target="_blank">huggingface.co/privacy</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        proofie does not control how these providers handle data once it reaches
+        them, and their policies may change independently of this one. Please
+        review the linked policies to understand their practices. proofie shares
+        your data with no one else.
+      </p>
+
+      <h2>5. Data retention and deletion</h2>
+      <ul>
+        <li>
+          <strong>Audited copy is processed per request, not stored by
+          proofie.</strong> When you run a check, your selected text is sent to
+          the providers above to produce results and then returned to you.
+          proofie does not keep its own database, log, or archive of the copy
+          you audit. (How long each provider may transiently retain a request on
+          their side is governed by their own policies, linked above.)
+        </li>
+        <li>
+          <strong>Uploaded guidelines and glossary terms persist until you
+          delete them.</strong> These are stored in the Pinecone vector database
+          so they remain available across sessions as your reference set. They
+          stay there until you remove them.
+        </li>
+      </ul>
+      <h3>How to delete your data</h3>
+      <ul>
+        <li>
+          <strong>Delete a guideline or term:</strong> open the plugin's
+          Guidelines or Terms tab and remove the item there. This deletes the
+          corresponding entries from the vector database.
+        </li>
+        <li>
+          <strong>Clear local preferences:</strong> uninstalling or removing the
+          plugin clears its local theme and language settings on your device.
+        </li>
+        <li>
+          <strong>Stop all processing:</strong> simply stop using or uninstall
+          the plugin. With no accounts to close, there is nothing further to do.
+        </li>
+        <li>
+          <strong>Need help?</strong> Email
+          <a href="mailto:iamwillian.magalhaes@gmail.com">iamwillian.magalhaes@gmail.com</a>
+          and your uploaded guidelines and terms can be removed for you.
+        </li>
+      </ul>
+
+      <h2>6. No sale of data, no ads, no tracking</h2>
+      <p>
+        proofie does not sell, rent, or trade your data. It does not use your
+        content or behavior for advertising, and it serves no ads. The plugin
+        contains no analytics, telemetry, or tracking code, and it sets no
+        cookies. The backend is protected by a shared secret token so that, in
+        normal use, only the proofie plugin can call it.
+      </p>
+
+      <h2>7. Security</h2>
+      <p>
+        All communication between the plugin and the backend uses HTTPS
+        encryption. Because proofie is an independent project, no system can be
+        guaranteed perfectly secure; the providers listed above maintain their
+        own security programs for the data they handle. Avoid submitting copy
+        you are not comfortable sending to those third-party AI services (see
+        the Terms of Service).
+      </p>
+
+      <h2>8. Children's privacy</h2>
+      <p>
+        proofie is a professional design tool intended for adults. It is not
+        directed to children, and it does not knowingly collect any data from
+        children under the age of 13 (or the equivalent minimum age in your
+        jurisdiction). Because there are no accounts, proofie does not knowingly
+        process children's personal information.
+      </p>
+
+      <h2>9. International data transfers</h2>
+      <p>
+        The backend and the third-party providers above may process data on
+        servers located in countries other than your own, including the United
+        States. By using proofie you understand that the text you submit may be
+        transferred to and processed in those locations under the providers'
+        respective terms and safeguards.
+      </p>
+
+      <h2>10. Changes to this policy</h2>
+      <p>
+        This policy may be updated as proofie evolves. When it changes, the
+        "Last updated" date at the top will change accordingly. Material changes
+        will be reflected on this page; please check back periodically.
+        Continued use of the plugin after an update means you accept the revised
+        policy.
+      </p>
+
+      <h2>11. Contact</h2>
+      <p>
+        Questions, requests, or concerns about this policy or your data:
+        <a href="mailto:iamwillian.magalhaes@gmail.com">iamwillian.magalhaes@gmail.com</a>.
+      </p>
+    </main>
+
+    <footer class="site">
+      <nav>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </nav>
+      <span class="copyright">&copy; 2026 Willian Magalhaes</span>
+    </footer>
+  </div>
+</body>
+</html>
