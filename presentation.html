@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>proofie — Capstone Showcase · Andela Agentic AI Accelerator</title>
+
+<!-- Single CDN font with robust system fallback (degrades gracefully offline) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  /* ============================================================
+     proofie · presentation deck
+     Palette lifted directly from figma-plugin/ui.html so the deck
+     reads as the same product. Dark theme chosen for projection.
+     ============================================================ */
+  :root {
+    /* brand accent (the plugin's signature green) */
+    --accent:        #2D9461;
+    --accent-bright: #4DBE85;   /* dark-mode accent — used as the deck's primary */
+    --accent-hi:     #5FCC94;
+    --accent-soft:   rgba(77, 190, 133, 0.16);
+    --accent-line:   rgba(77, 190, 133, 0.30);
+
+    /* warm-neutral dark surfaces (mirror of the plugin's dark theme) */
+    --bg:        #0E0D0C;
+    --bg-2:      #121110;
+    --surface:   #1A1817;
+    --surface-2: #211F1D;
+    --surface-3: #2A2724;
+    --border:    #2F2C29;
+    --border-strong: #3E3A36;
+
+    /* text */
+    --fg:   #F4F1EB;
+    --fg-2: #B6B1A6;
+    --fg-3: #807B72;
+    --fg-4: #5A5650;
+
+    /* severity (verbatim from plugin) */
+    --sev-high: #FF6B5C; --sev-high-soft: rgba(255,107,92,0.14);
+    --sev-med:  #F4B65A; --sev-med-soft:  rgba(244,182,90,0.14);
+    --sev-low:  #7AA8FF; --sev-low-soft:  rgba(122,168,255,0.14);
+    --success:  #34D399; --success-soft:  rgba(52,211,153,0.16);
+
+    /* category colors (verbatim from plugin) */
+    --cat-tone:         #C77FD4;
+    --cat-clarity:      #6B96E0;
+    --cat-a11y:         #4DBE85;
+    --cat-consistency:  #E8A33C;
+    --cat-action:       #D86B85;
+    --cat-localization: #66A6CF;
+
+    /* type */
+    --sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+    /* spacing scale (8pt) */
+    --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px;
+    --s6: 32px; --s7: 48px; --s8: 64px; --s9: 96px; --s10: 128px;
+
+    --radius: 16px;
+    --radius-sm: 10px;
+    --maxw: 1120px;
+
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px rgba(0,0,0,0.36);
+    --shadow-lg: 0 2px 4px rgba(0,0,0,0.5), 0 30px 70px rgba(0,0,0,0.5);
+    --motion: 240ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+  body {
+    margin: 0;
+    font-family: var(--sans);
+    background:
+      radial-gradient(1200px 700px at 78% -8%, rgba(77,190,133,0.10), transparent 60%),
+      radial-gradient(900px 600px at 5% 8%, rgba(77,190,133,0.05), transparent 55%),
+      var(--bg);
+    color: var(--fg);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "cv01", "ss01";
+  }
+
+  ::selection { background: var(--accent-soft); color: var(--fg); }
+
+  a { color: var(--accent-bright); text-decoration: none; }
+  a:hover { color: var(--accent-hi); }
+
+  h1, h2, h3 { margin: 0; letter-spacing: -0.025em; line-height: 1.08; font-weight: 700; }
+  p { margin: 0; }
+
+  .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--s5); }
+
+  /* ---- focus visibility (a11y) ---- */
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent-bright);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  /* =========================================================
+     STICKY NAV
+     ========================================================= */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(14,13,12,0.72);
+    backdrop-filter: saturate(160%) blur(14px);
+    -webkit-backdrop-filter: saturate(160%) blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: var(--maxw); margin: 0 auto;
+    height: 60px; padding: 0 var(--s5);
+    display: flex; align-items: center; gap: var(--s5);
+  }
+  .nav-brand { display: flex; align-items: center; gap: var(--s2); flex-shrink: 0; }
+  .nav-links { display: flex; gap: var(--s1); margin-left: auto; flex-wrap: wrap; }
+  .nav-links a {
+    font-size: 13px; font-weight: 500; color: var(--fg-2);
+    padding: 6px 11px; border-radius: 8px;
+    transition: color var(--motion), background var(--motion);
+  }
+  .nav-links a:hover { color: var(--fg); background: var(--surface-2); }
+  @media (max-width: 900px) { .nav-links { display: none; } }
+
+  /* =========================================================
+     BRAND MARK (faithful to the plugin: rounded green tile + check)
+     ========================================================= */
+  .brand-mark {
+    width: 26px; height: 26px; border-radius: 8px;
+    background: var(--accent-bright);
+    color: #0E1A12;
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.06) inset, 0 4px 12px rgba(77,190,133,0.35);
+  }
+  .brand-mark.lg { width: 56px; height: 56px; border-radius: 16px; }
+  .brand-mark.lg svg { width: 26px; height: 26px; }
+  .wordmark {
+    font-weight: 600; letter-spacing: -0.03em; color: var(--fg);
+    font-size: 17px;
+  }
+
+  /* =========================================================
+     HERO
+     ========================================================= */
+  .hero {
+    position: relative;
+    padding: clamp(64px, 11vh, 132px) 0 var(--s9);
+    overflow: hidden;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: var(--s8);
+    align-items: center;
+  }
+  @media (max-width: 940px) { .hero-grid { grid-template-columns: 1fr; gap: var(--s7); } }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: var(--s2);
+    font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em;
+    color: var(--accent-bright);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent-line);
+    padding: 6px 13px; border-radius: 999px;
+    margin-bottom: var(--s5);
+  }
+  .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-bright); box-shadow: 0 0 0 4px var(--accent-soft); }
+
+  .hero h1 {
+    font-size: clamp(46px, 7.2vw, 88px);
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    line-height: 0.95;
+  }
+  .hero h1 .pf { color: var(--accent-bright); }
+  .hero-tag {
+    font-size: clamp(19px, 2.4vw, 26px);
+    font-weight: 600;
+    color: var(--fg);
+    margin-top: var(--s5);
+    letter-spacing: -0.02em;
+  }
+  .hero-sub {
+    font-size: clamp(15px, 1.6vw, 17.5px);
+    color: var(--fg-2);
+    margin-top: var(--s4);
+    max-width: 46ch;
+  }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s7); }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: var(--s2);
+    font-family: var(--sans); font-size: 14.5px; font-weight: 600;
+    padding: 12px 20px; border-radius: 11px;
+    transition: transform var(--motion), background var(--motion), border-color var(--motion);
+    cursor: pointer; border: 1px solid transparent;
+  }
+  .btn-primary { background: var(--accent-bright); color: #0E1A12; box-shadow: 0 6px 20px rgba(77,190,133,0.28); }
+  .btn-primary:hover { background: var(--accent-hi); transform: translateY(-1px); }
+  .btn-ghost { background: var(--surface); color: var(--fg); border-color: var(--border-strong); }
+  .btn-ghost:hover { background: var(--surface-2); transform: translateY(-1px); }
+
+  .hero-meta { display: flex; gap: var(--s6); margin-top: var(--s7); flex-wrap: wrap; }
+  .hero-meta .stat { display: flex; flex-direction: column; }
+  .hero-meta .stat b { font-size: 24px; font-weight: 700; color: var(--fg); letter-spacing: -0.02em; }
+  .hero-meta .stat span { font-size: 12.5px; color: var(--fg-3); margin-top: 2px; }
+
+  /* hero motion visual — the loading webm framed like the plugin */
+  .hero-visual {
+    position: relative;
+    border-radius: 22px;
+    background: linear-gradient(180deg, var(--surface), var(--bg-2));
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+  .hero-visual .chrome {
+    display: flex; align-items: center; gap: var(--s2);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .hero-visual .dots { display: flex; gap: 6px; }
+  .hero-visual .dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--surface-3); display: block; }
+  .hero-visual .chrome .label { margin-left: auto; font-size: 11px; color: var(--fg-3); font-family: var(--mono); }
+  .hero-video-wrap {
+    background: #1F1815; /* matches the video's letterbox color, per the plugin */
+    aspect-ratio: 400 / 267;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-video-wrap video, .hero-video-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .hero-visual .caption {
+    display: flex; align-items: center; gap: var(--s3);
+    padding: 14px 16px; border-top: 1px solid var(--border); background: var(--surface-2);
+  }
+  .hero-visual .caption .ct { flex: 1; }
+  .hero-visual .caption .ct b { display: block; font-size: 13px; font-weight: 600; }
+  .hero-visual .caption .ct span { font-size: 11px; color: var(--fg-3); }
+  .mini-prog { width: 64px; height: 8px; background: var(--border); border-radius: 999px; overflow: hidden; }
+  .mini-prog i { display: block; height: 100%; width: 64%; background: var(--accent-bright); border-radius: 999px; }
+
+  /* =========================================================
+     SECTION SCAFFOLD
+     ========================================================= */
+  section { padding: var(--s9) 0; position: relative; }
+  section.tight { padding: var(--s8) 0; }
+  .section-head { max-width: 60ch; margin-bottom: var(--s7); }
+  .kicker {
+    display: inline-block; font-family: var(--mono); font-size: 12px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent-bright);
+    margin-bottom: var(--s3);
+  }
+  .section-head h2 { font-size: clamp(30px, 4.4vw, 46px); font-weight: 700; }
+  .section-head p { font-size: clamp(16px, 1.7vw, 18.5px); color: var(--fg-2); margin-top: var(--s4); }
+
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border-strong), transparent); }
+
+  /* =========================================================
+     PROBLEM SECTION
+     ========================================================= */
+  .problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s4); }
+  @media (max-width: 860px) { .problem-grid { grid-template-columns: 1fr; } }
+  .problem-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: var(--s6);
+    transition: transform var(--motion), border-color var(--motion);
+  }
+  .problem-card:hover { transform: translateY(-3px); border-color: var(--border-strong); }
+  .problem-card .ic { width: 44px; height: 44px; border-radius: 12px; background: var(--surface-3); display: flex; align-items: center; justify-content: center; color: var(--accent-bright); margin-bottom: var(--s4); }
+  .problem-card h3 { font-size: 18px; margin-bottom: var(--s2); }
+  .problem-card p { font-size: 14.5px; color: var(--fg-2); }
+
+  .problem-quote {
+    margin-top: var(--s7);
+    border-left: 3px solid var(--accent-bright);
+    padding: var(--s4) 0 var(--s4) var(--s6);
+    font-size: clamp(18px, 2.4vw, 24px);
+    font-weight: 600; letter-spacing: -0.02em; color: var(--fg);
+    max-width: 70ch;
+  }
+  .problem-quote span { color: var(--accent-bright); }
+
+  /* =========================================================
+     ARCHITECTURE
+     ========================================================= */
+  .arch-stage {
+    background:
+      radial-gradient(700px 360px at 50% 0%, rgba(77,190,133,0.07), transparent 70%),
+      var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: clamp(28px, 4vw, 56px);
+    box-shadow: var(--shadow);
+  }
+  .flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: var(--s4); align-items: stretch; }
+  @media (max-width: 1000px) { .flow { grid-template-columns: 1fr; } .flow .arrow { transform: rotate(90deg); justify-self: center; height: 40px; } }
+
+  .node {
+    background: var(--surface-2); border: 1px solid var(--border-strong);
+    border-radius: var(--radius); padding: var(--s5);
+    display: flex; flex-direction: column; gap: var(--s2);
+    position: relative;
+  }
+  .node.accent { border-color: var(--accent-line); box-shadow: 0 0 0 1px var(--accent-line), 0 12px 30px rgba(77,190,133,0.10); }
+  .node .node-ic { width: 40px; height: 40px; border-radius: 11px; background: var(--surface-3); display: flex; align-items: center; justify-content: center; color: var(--accent-bright); }
+  .node h4 { font-size: 15.5px; font-weight: 600; letter-spacing: -0.01em; }
+  .node .role { font-size: 11px; font-family: var(--mono); color: var(--fg-3); text-transform: uppercase; letter-spacing: 0.08em; }
+  .node p { font-size: 13px; color: var(--fg-2); }
+  .node .tag { align-self: flex-start; font-size: 10.5px; font-weight: 600; color: var(--accent-bright); background: var(--accent-soft); border: 1px solid var(--accent-line); padding: 2px 8px; border-radius: 999px; }
+
+  .arrow { display: flex; align-items: center; justify-content: center; color: var(--fg-4); }
+  .arrow svg { width: 32px; height: 24px; }
+  .arrow .lbl { display: none; }
+
+  /* the fan-out group (Claude / Pinecone / Voyage) */
+  .fanout { margin-top: var(--s5); }
+  .fanout-head { display: flex; align-items: center; gap: var(--s3); margin-bottom: var(--s4); }
+  .fanout-head .chip {
+    font-size: 12px; font-family: var(--mono); color: var(--fg-2);
+    background: var(--surface-2); border: 1px solid var(--border-strong);
+    padding: 5px 12px; border-radius: 999px;
+  }
+  .fanout-head .ln { flex: 1; height: 1px; background: var(--border-strong); }
+  .fanout-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s4); }
+  @media (max-width: 860px) { .fanout-grid { grid-template-columns: 1fr; } }
+  .svc {
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: var(--s5);
+    display: flex; flex-direction: column; gap: var(--s2);
+  }
+  .svc .top { display: flex; align-items: center; gap: var(--s3); }
+  .svc .badge { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; font-size: 15px; }
+  .svc h4 { font-size: 15px; }
+  .svc .role { font-size: 10.5px; font-family: var(--mono); color: var(--fg-3); text-transform: uppercase; letter-spacing: 0.08em; }
+  .svc p { font-size: 12.5px; color: var(--fg-2); }
+
+  .arch-notes { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--s4); margin-top: var(--s6); }
+  @media (max-width: 860px) { .arch-notes { grid-template-columns: 1fr; } }
+  .arch-note { font-size: 13px; color: var(--fg-2); padding: var(--s4); background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); }
+  .arch-note b { color: var(--fg); display: block; margin-bottom: 3px; font-size: 13px; }
+
+  /* =========================================================
+     CAPABILITIES
+     ========================================================= */
+  .cap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s4); }
+  @media (max-width: 980px) { .cap-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 620px) { .cap-grid { grid-template-columns: 1fr; } }
+  .cap {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: var(--s6);
+    transition: transform var(--motion), border-color var(--motion), box-shadow var(--motion);
+    position: relative; overflow: hidden;
+  }
+  .cap::after {
+    content: ""; position: absolute; inset: 0 0 auto 0; height: 2px;
+    background: var(--c, var(--accent-bright)); opacity: 0; transition: opacity var(--motion);
+  }
+  .cap:hover { transform: translateY(-4px); border-color: var(--border-strong); box-shadow: var(--shadow); }
+  .cap:hover::after { opacity: 0.9; }
+  .cap .ic { width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--s4); color: var(--c, var(--accent-bright)); background: color-mix(in srgb, var(--c, var(--accent-bright)) 14%, transparent); }
+  .cap h3 { font-size: 17.5px; margin-bottom: var(--s2); }
+  .cap p { font-size: 14px; color: var(--fg-2); }
+
+  /* =========================================================
+     DEMO / MOCKUPS  (faithful recreation of the plugin UI)
+     ========================================================= */
+  .demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s6); align-items: start; }
+  @media (max-width: 1000px) { .demo-grid { grid-template-columns: 1fr; } }
+
+  /* the plugin frame uses the LIGHT theme palette to look like real Figma */
+  .plugin {
+    --p-accent: #2D9461; --p-accent-soft:#DEEFE5; --p-accent-pressed:#1F6E47;
+    --p-bg:#F6F5F1; --p-surface:#FFFFFF; --p-surface2:#FAF9F5; --p-surface3:#F1EFE9;
+    --p-border:#E8E5DE; --p-fg:#1A1916; --p-fg2:#5C5A52; --p-fg3:#8E8B80; --p-fg4:#B5B1A4;
+    --p-sev-high:#E54B3C; --p-sev-med:#E8A33C; --p-sev-low:#5B8DEF;
+    --p-cat-tone:#B86CC4;
+    width: 100%;
+    background: var(--p-bg);
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.18);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    color: var(--p-fg);
+    font-size: 13px;
+  }
+  .pl-header {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px; background: var(--p-surface); border-bottom: 1px solid var(--p-border);
+  }
+  .pl-mark { width: 22px; height: 22px; border-radius: 6px; background: var(--p-accent); color:#fff; display:flex; align-items:center; justify-content:center; }
+  .pl-word { font-size: 14px; font-weight: 600; letter-spacing: -0.02em; }
+  .pl-tabs { display: flex; gap: 14px; margin-left: 10px; }
+  .pl-tab { font-size: 13px; font-weight: 600; color: var(--p-fg3); padding-bottom: 2px; }
+  .pl-tab.active { color: var(--p-fg); border-bottom: 2px solid var(--p-accent); }
+  .pl-spacer { margin-left: auto; display:flex; gap:6px; }
+  .pl-dot-btn { width: 22px; height: 22px; border-radius: 6px; background: var(--p-surface3); }
+
+  .pl-body { padding: 14px; }
+  .pl-subtabs { display:flex; gap:18px; border-bottom:1px solid var(--p-border); padding:0 0 8px; margin-bottom:14px; }
+  .pl-subtab { font-size:13px; font-weight:600; color:var(--p-fg3); display:inline-flex; align-items:center; gap:6px; padding-bottom:6px; position:relative; }
+  .pl-subtab.active { color:var(--p-fg); }
+  .pl-subtab.active::after { content:""; position:absolute; bottom:-9px; left:0; right:0; height:2px; background:var(--p-accent); border-radius:2px 2px 0 0; }
+  .pl-subcount { font-size:11px; font-weight:600; color:var(--p-fg3); background:var(--p-surface3); padding:1px 6px; border-radius:999px; }
+
+  .pl-banner {
+    display:flex; flex-direction:column; align-items:center; gap:2px;
+    background: var(--p-accent); color:#fff; border-radius:12px; padding:10px 16px; margin-bottom:14px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18);
+  }
+  .pl-banner b { font-size:15px; font-weight:700; letter-spacing:-0.01em; display:inline-flex; align-items:center; gap:8px;}
+  .pl-banner span { font-size:11px; opacity:0.88; }
+
+  .pl-sevrow { display:flex; gap:6px; margin-bottom:12px; }
+  .pl-sevpill { display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:600; color:var(--p-fg2); background:var(--p-surface); border:1px solid var(--p-border); border-radius:999px; padding:4px 10px; }
+  .pl-sevpill .d { width:7px; height:7px; border-radius:50%; }
+  .pl-sevpill.inactive { opacity:0.4; }
+
+  .pl-issue { display:flex; background:var(--p-surface); border:1px solid var(--p-border); border-radius:10px; overflow:hidden; margin-bottom:10px; }
+  .pl-bar { width:3px; flex-shrink:0; }
+  .pl-ibody { flex:1; min-width:0; padding:11px 12px; display:flex; flex-direction:column; gap:6px; }
+  .pl-before { font-size:12px; color:var(--p-fg3); text-decoration:line-through; text-decoration-color:var(--p-fg4); }
+  .pl-after { font-size:13px; font-weight:600; letter-spacing:-0.01em; color:var(--p-accent); }
+  .pl-reason { font-size:12px; color:var(--p-fg2); line-height:1.5; margin-top:2px; }
+  .pl-meta { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:4px; }
+  .pl-catpill { font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#fff; border-radius:999px; padding:3px 8px; }
+  .pl-source { display:inline-flex; align-items:center; gap:4px; font-size:10px; color:var(--p-fg3); }
+  .pl-actions { display:flex; align-items:center; gap:6px; margin-top:8px; }
+  .pl-apply { font-size:12px; font-weight:600; color:#fff; background:var(--p-accent); border-radius:8px; padding:6px 12px; display:inline-flex; align-items:center; gap:5px; }
+  .pl-undo { font-size:12px; font-weight:600; color:var(--p-fg2); background:var(--p-surface3); border-radius:8px; padding:6px 12px; }
+
+  /* the source-citation callout (the trust feature) */
+  .pl-cite {
+    background: var(--p-surface2); border:1px dashed var(--p-border); border-radius:8px;
+    padding:8px 10px; margin-top:2px;
+  }
+  .pl-cite .lbl { font-size:9.5px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--p-fg3); display:flex; align-items:center; gap:5px; margin-bottom:3px;}
+  .pl-cite .src { font-size:11px; color:var(--p-fg2); font-style:italic; line-height:1.45; }
+  .pl-cite .badge { font-family: var(--mono); font-size:10px; font-weight:600; color:var(--p-accent-pressed); background:var(--p-accent-soft); border-radius:5px; padding:1px 5px; margin-right:5px; font-style: normal;}
+
+  /* score grid mock */
+  .pl-scores { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:14px; }
+  .pl-score { background:var(--p-surface); border:1px solid var(--p-border); border-radius:10px; padding:10px 8px; text-align:center; }
+  .pl-score b { font-size:20px; font-weight:700; letter-spacing:-0.02em; display:block; }
+  .pl-score span { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:var(--p-fg3); margin-top:2px; display:block; }
+
+  .demo-caption { margin-top: var(--s4); }
+  .demo-caption h3 { font-size: 18px; margin-bottom: var(--s2); }
+  .demo-caption p { font-size: 14px; color: var(--fg-2); }
+  .demo-caption .tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:var(--s3); }
+  .demo-caption .tags span { font-size:11px; font-weight:600; color:var(--fg-2); background:var(--surface-2); border:1px solid var(--border); padding:3px 9px; border-radius:999px; }
+
+  /* SCREENSHOT DROP-IN SLOT */
+  .dropin {
+    border: 2px dashed var(--border-strong);
+    border-radius: var(--radius);
+    background:
+      repeating-linear-gradient(45deg, transparent, transparent 12px, rgba(255,255,255,0.012) 12px, rgba(255,255,255,0.012) 24px),
+      var(--surface-2);
+    min-height: 260px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: var(--s6); gap: var(--s3);
+    color: var(--fg-3);
+  }
+  .dropin .ic { width: 52px; height: 52px; border-radius: 14px; background: var(--surface-3); display:flex; align-items:center; justify-content:center; color: var(--accent-bright); }
+  .dropin b { color: var(--fg); font-size: 15px; font-weight: 600; }
+  .dropin code { font-family: var(--mono); font-size: 12px; color: var(--accent-bright); background: var(--bg-2); padding: 3px 8px; border-radius: 6px; border: 1px solid var(--border); }
+  .dropin .hint { font-size: 12.5px; max-width: 42ch; }
+
+  /* =========================================================
+     TECH STACK
+     ========================================================= */
+  .stack-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s4); }
+  @media (max-width: 900px) { .stack-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 560px) { .stack-grid { grid-template-columns: 1fr; } }
+  .tech {
+    display: flex; gap: var(--s4); align-items: center;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: var(--s5);
+    transition: transform var(--motion), border-color var(--motion);
+  }
+  .tech:hover { transform: translateY(-3px); border-color: var(--border-strong); }
+  .tech .logo { width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+  .tech h4 { font-size: 15.5px; }
+  .tech p { font-size: 12.5px; color: var(--fg-3); margin-top: 1px; }
+
+  /* =========================================================
+     CURRICULUM (the proof — the heart of the deck)
+     ========================================================= */
+  .curr-intro {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s4);
+    margin-bottom: var(--s7);
+  }
+  @media (max-width: 900px) { .curr-intro { grid-template-columns: repeat(2,1fr); } }
+  .curr-stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--s5); }
+  .curr-stat b { font-size: 30px; font-weight: 700; color: var(--accent-bright); letter-spacing: -0.02em; display:block; }
+  .curr-stat span { font-size: 13px; color: var(--fg-2); margin-top: 2px; display:block; }
+
+  .curr-list { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); }
+  @media (max-width: 900px) { .curr-list { grid-template-columns: 1fr; } }
+  .curr-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: var(--s5) var(--s6);
+    transition: transform var(--motion), border-color var(--motion), box-shadow var(--motion);
+  }
+  .curr-card:hover { transform: translateY(-3px); border-color: var(--accent-line); box-shadow: var(--shadow); }
+  .curr-card .top { display: flex; align-items: flex-start; gap: var(--s3); margin-bottom: var(--s3); }
+  .curr-card .num {
+    flex-shrink: 0; width: 30px; height: 30px; border-radius: 9px;
+    background: var(--accent-soft); border: 1px solid var(--accent-line);
+    color: var(--accent-bright); font-weight: 700; font-size: 13px; font-family: var(--mono);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .curr-card h3 { font-size: 16.5px; font-weight: 600; letter-spacing: -0.015em; }
+  .curr-card p { font-size: 13.5px; color: var(--fg-2); }
+  .curr-card .where {
+    display: inline-flex; align-items: center; gap: 6px; margin-top: var(--s3);
+    font-family: var(--mono); font-size: 11.5px; color: var(--accent-bright);
+    background: var(--bg-2); border: 1px solid var(--border); border-radius: 7px; padding: 4px 9px;
+  }
+  .curr-card .where svg { opacity: 0.8; }
+
+  /* =========================================================
+     CLOSING
+     ========================================================= */
+  .closing { text-align: center; padding: var(--s10) 0 var(--s9); }
+  .closing-card {
+    background:
+      radial-gradient(600px 320px at 50% 0%, rgba(77,190,133,0.10), transparent 70%),
+      var(--surface);
+    border: 1px solid var(--border); border-radius: 24px;
+    padding: clamp(40px, 6vw, 72px) var(--s6);
+    box-shadow: var(--shadow);
+  }
+  .closing-card .brand-mark.lg { margin: 0 auto var(--s5); }
+  .closing h2 { font-size: clamp(30px, 4.6vw, 50px); font-weight: 800; letter-spacing: -0.035em; }
+  .closing h2 .pf { color: var(--accent-bright); }
+  .closing p { font-size: clamp(16px, 1.8vw, 19px); color: var(--fg-2); margin: var(--s4) auto 0; max-width: 56ch; }
+
+  .next-list { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--s4); max-width: 820px; margin: var(--s7) auto 0; text-align: left; }
+  @media (max-width: 760px) { .next-list { grid-template-columns: 1fr; } }
+  .next {
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--s5);
+  }
+  .next .ic { width: 38px; height: 38px; border-radius: 10px; background: var(--accent-soft); color: var(--accent-bright); display:flex; align-items:center; justify-content:center; margin-bottom: var(--s3);}
+  .next h4 { font-size: 15px; margin-bottom: 4px; }
+  .next p { font-size: 13px; color: var(--fg-2); margin: 0; }
+
+  .footer { padding: var(--s7) 0; text-align: center; color: var(--fg-3); font-size: 13px; }
+  .footer .wordmark { font-size: 14px; }
+  .footer a { font-weight: 600; }
+
+  /* reveal-on-scroll (CSS-only, with IntersectionObserver toggle) */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 700ms ease, transform 700ms cubic-bezier(0.2,0.7,0.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1 !important; transform: none !important; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* generous print-friendliness just in case it's exported */
+  @media print {
+    .nav { position: static; }
+    section { padding: 32px 0; break-inside: avoid; }
+    body { background: #fff; color: #111; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ===================== STICKY NAV ===================== -->
+<nav class="nav" aria-label="Section navigation">
+  <div class="nav-inner">
+    <span class="nav-brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.6 3.6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="wordmark">proofie</span>
+    </span>
+    <div class="nav-links">
+      <a href="#problem">Problem</a>
+      <a href="#how">How it works</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#demo">See it</a>
+      <a href="#stack">Stack</a>
+      <a href="#curriculum">Curriculum</a>
+      <a href="#next">What's next</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal in">
+      <span class="eyebrow"><span class="dot"></span> Capstone · Andela Agentic AI Accelerator</span>
+      <h1><span class="pf">proofie</span></h1>
+      <p class="hero-tag">Your copy, sharpened — right inside Figma.</p>
+      <p class="hero-sub">
+        A UX-writing audit agent that reads every text node in your design, checks it for
+        tone, accessibility, consistency, and localization, then rewrites it in place — with
+        every suggestion grounded in your own style guide and a citation to prove it.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#how">
+          See how it works
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="#curriculum">Curriculum coverage</a>
+      </div>
+      <div class="hero-meta">
+        <div class="stat"><b>4 + 1</b><span>parallel audits, then a rewrite pass</span></div>
+        <div class="stat"><b>RAG</b><span>grounded in your guidelines</span></div>
+        <div class="stat"><b>EN / PT-BR</b><span>bilingual interface</span></div>
+        <div class="stat"><b>Live</b><span>deployed on HF Spaces</span></div>
+      </div>
+    </div>
+
+    <!-- motion visual: the actual plugin loading animation, framed -->
+    <div class="hero-visual reveal in" aria-label="proofie loading animation">
+      <div class="chrome">
+        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="label">proofie · figma</span>
+      </div>
+      <div class="hero-video-wrap">
+        <video
+          autoplay loop muted playsinline
+          poster="figma-plugin/assets/proofie-loading-poster.png">
+          <source src="figma-plugin/assets/proofie-loading.webm" type="video/webm" />
+          <img src="figma-plugin/assets/proofie-loading-poster.png" alt="proofie loading" />
+        </video>
+      </div>
+      <div class="caption">
+        <div class="ct">
+          <b>Reading your copy…</b>
+          <span>Classifying 38 text nodes by context</span>
+        </div>
+        <span class="mini-prog" aria-hidden="true"><i></i></span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ===================== PROBLEM ===================== -->
+<section id="problem">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">The problem</span>
+      <h2>UX writing is the last thing reviewed and the first thing users read.</h2>
+      <p>
+        Copy lives scattered across hundreds of frames. It drifts off-brand, breaks its own
+        rules, and ships before anyone reads it end-to-end. Spell checkers don't understand
+        that a button isn't an error message — and that "Sign in" and "Log in" in the same
+        file is a real bug.
+      </p>
+    </div>
+
+    <div class="problem-grid">
+      <div class="problem-card reveal">
+        <div class="ic" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h10M4 17h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="18" cy="16" r="3.2" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <h3>Inconsistent</h3>
+        <p>"Sign in", "Log in", "Login" — the same action, worded three ways, scattered across a file no single person reads cover to cover.</p>
+      </div>
+      <div class="problem-card reveal">
+        <div class="ic" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Manual</h3>
+        <p>A human proofreads every screen by hand, late in the process, with no memory of the rule they enforced two frames ago.</p>
+      </div>
+      <div class="problem-card reveal">
+        <div class="ic" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 21.3 6.8 18.6l1-5.8L3.5 8.2l5.9-.9L12 2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Off-brand</h3>
+        <p>Your voice lives in a style guide nobody opens mid-design. By the time copy is checked against it, the screens are already built.</p>
+      </div>
+    </div>
+
+    <p class="problem-quote">
+      proofie reads the whole file at once, knows what each string <span>is</span>,
+      and checks it against <span>your</span> guidelines — not generic grammar rules.
+    </p>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ===================== HOW IT WORKS ===================== -->
+<section id="how">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Architecture</span>
+      <h2>One click in Figma fans out to a parallel audit pipeline.</h2>
+      <p>
+        The plugin posts your selected frames to a Starlette backend. There's no slow agent
+        loop — the orchestrator fires four audits at once with <code style="font-family:var(--mono);font-size:0.9em;color:var(--accent-bright)">asyncio.gather</code>,
+        retrieves your guidelines from a vector store, then runs a single rewrite pass.
+      </p>
+    </div>
+
+    <div class="arch-stage reveal">
+      <!-- top flow: Plugin -> Backend -> Pipeline -->
+      <div class="flow">
+        <div class="node">
+          <div class="node-ic" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="2"/><path d="M9 7h6M9 11h6M9 15h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <span class="role">Client</span>
+          <h4>Figma plugin</h4>
+          <p>Extracts every text node and classifies each by context — button, heading, error, placeholder, tooltip, empty state.</p>
+          <span class="tag">ui.html · code.js</span>
+        </div>
+
+        <div class="arrow" aria-hidden="true">
+          <svg viewBox="0 0 32 24" fill="none"><path d="M2 12h26M22 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+
+        <div class="node accent">
+          <div class="node-ic" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 7l8-4 8 4-8 4-8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M4 12l8 4 8-4M4 17l8 4 8-4" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="role">Orchestrator</span>
+          <h4>Starlette backend</h4>
+          <p><code style="font-family:var(--mono);font-size:0.86em;color:var(--accent-bright)">run_audit()</code> — parallel fan-out, no LLM agent loop. ~3–5× faster than the tool-using loop it replaced.</p>
+          <span class="tag">POST /api/wizard</span>
+        </div>
+
+        <div class="arrow" aria-hidden="true">
+          <svg viewBox="0 0 32 24" fill="none"><path d="M2 12h26M22 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+
+        <div class="node">
+          <div class="node-ic" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4 10-10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="role">Result</span>
+          <h4>Grounded findings</h4>
+          <p>Each finding is verified against the source text, tagged by category &amp; severity, and cited — then returned for one-click Apply.</p>
+          <span class="tag">before → after + source</span>
+        </div>
+      </div>
+
+      <!-- fan-out: the three services -->
+      <div class="fanout">
+        <div class="fanout-head">
+          <span class="chip">run_audit() fans out to</span>
+          <span class="ln" aria-hidden="true"></span>
+        </div>
+        <div class="fanout-grid">
+          <div class="svc">
+            <div class="top">
+              <span class="badge" style="background:rgba(217,107,133,0.16);color:#D86B85;">AI</span>
+              <div><h4>Claude Haiku</h4><span class="role">Anthropic</span></div>
+            </div>
+            <p>Four audits run in parallel — tone, accessibility, consistency, localization — then one <code style="font-family:var(--mono);font-size:0.85em;color:var(--accent-bright)">suggest_rewrites</code> pass. Temperature locked at 0.2.</p>
+          </div>
+          <div class="svc">
+            <div class="top">
+              <span class="badge" style="background:rgba(102,166,207,0.16);color:#66A6CF;">DB</span>
+              <div><h4>Pinecone</h4><span class="role">Vector store</span></div>
+            </div>
+            <p>One index, single user. Your uploaded guideline chunks, per-upload manifests, and glossary terms — distinguished by a category field.</p>
+          </div>
+          <div class="svc">
+            <div class="top">
+              <span class="badge" style="background:rgba(77,190,133,0.16);color:#4DBE85;">EM</span>
+              <div><h4>Voyage AI</h4><span class="role">Embeddings</span></div>
+            </div>
+            <p>Real <code style="font-family:var(--mono);font-size:0.85em;color:var(--accent-bright)">voyage-3</code> embeddings (1024-dim) for ingestion and retrieval — so the RAG matches meaning, not keywords.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-notes">
+        <div class="arch-note"><b>Hallucination guard</b> Every finding's quoted <i>before</i> text is verified to exist in the input copy. Fabricated quotes are dropped before the response leaves the backend.</div>
+        <div class="arch-note"><b>Source citations</b> Each prompt gets a numbered evidence pool (your guideline chunks + built-in rules). Findings carry a <code style="font-family:var(--mono);font-size:0.85em;color:var(--accent-bright)">source_id</code> resolved to a verifiable excerpt.</div>
+        <div class="arch-note"><b>Rate limiting</b> SlowAPI caps usage at 30 audits/hour and 60 guideline mutations/hour per IP, with SSRF and prompt-injection checks at the door.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ===================== CAPABILITIES ===================== -->
+<section id="capabilities">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Capabilities</span>
+      <h2>Four audits, grounded suggestions, and a fix you can apply without leaving the canvas.</h2>
+    </div>
+
+    <div class="cap-grid">
+      <div class="cap reveal" style="--c:var(--cat-tone)">
+        <div class="ic" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3a7 7 0 00-7 7c0 2.4 1.2 4 2.5 5.2.7.6 1 1 1 1.8V19h7v-2c0-.8.3-1.2 1-1.8C18.8 14 20 12.4 20 10a7 7 0 00-7-7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.5 22h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <h3>Tone audit</h3>
+        <p>Is your voice consistent and on-brand? proofie compares every string against the tone rules in your style guide — not a generic rulebook.</p>
+      </div>
+
+      <div class="cap reveal" style="--c:var(--cat-a11y)">
+        <div class="ic" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="4.5" r="2" stroke="currentColor" stroke-width="2"/><path d="M5 8h14M12 8v6m0 0l-3 6m3-6l3 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Accessibility</h3>
+        <p>Reading level, jargon, inclusive language, and screen-reader friendliness — the things that make copy usable for everyone.</p>
+      </div>
+
+      <div class="cap reveal" style="--c:var(--cat-consistency)">
+        <div class="ic" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M8 7h11M8 7l3-3M8 7l3 3M16 17H5m11 0l-3-3m3 3l-3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Consistency</h3>
+        <p>Detects "Sign in" vs "Log in" vs "Login" across the entire file, plus glossary violations against your preferred terms — for free.</p>
+      </div>
+
+      <div class="cap reveal" style="--c:var(--cat-localization)">
+        <div class="ic" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c2.5 2.5 3.8 6 3.8 9S14.5 18.5 12 21M12 3C9.5 5.5 8.2 9 8.2 12S9.5 18.5 12 21" stroke="currentColor" stroke-width="2"/></svg></div>
+        <h3>Localization-ready</h3>
+        <p>Opt-in checks for idioms, string concatenation, and hardcoded plurals — the things that quietly break when your copy ships in German.</p>
+      </div>
+
+      <div class="cap reveal" style="--c:var(--cat-clarity)">
+        <div class="ic" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 4l1.8 4.4L18 9l-3 3 .8 5L12 14.6 8.2 17 9 12 6 9l4.2-.6L12 4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+        <h3>Grounded suggestions</h3>
+        <p>Every finding cites the specific guideline excerpt it's based on — so you can verify the rewrite isn't fabricated. Trust, built in.</p>
+      </div>
+
+      <div class="cap reveal" style="--c:var(--accent-bright)">
+        <div class="ic" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 12l5 5L21 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 18l5 5 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/></svg></div>
+        <h3>Apply fix in place</h3>
+        <p>One click rewrites the text node directly in your Figma frame. Every change is logged in History with one-click undo.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:var(--s5); display:flex; flex-wrap:wrap; gap:var(--s3); align-items:center;">
+      <span style="font-size:13px; color:var(--fg-3); font-family:var(--mono);">also:</span>
+      <span class="demo-caption" style="margin:0;"></span>
+      <span style="font-size:13px; font-weight:600; color:var(--fg-2); background:var(--surface-2); border:1px solid var(--border); padding:5px 12px; border-radius:999px;">Severity filters · HIGH / MED / LOW</span>
+      <span style="font-size:13px; font-weight:600; color:var(--fg-2); background:var(--surface-2); border:1px solid var(--border); padding:5px 12px; border-radius:999px;">Per-language style guides</span>
+      <span style="font-size:13px; font-weight:600; color:var(--fg-2); background:var(--surface-2); border:1px solid var(--border); padding:5px 12px; border-radius:999px;">Terminology glossary</span>
+      <span style="font-size:13px; font-weight:600; color:var(--fg-2); background:var(--surface-2); border:1px solid var(--border); padding:5px 12px; border-radius:999px;">Full-page batch scan</span>
+      <span style="font-size:13px; font-weight:600; color:var(--fg-2); background:var(--surface-2); border:1px solid var(--border); padding:5px 12px; border-radius:999px;">Bring your own key</span>
+      <span style="font-size:13px; font-weight:600; color:var(--fg-2); background:var(--surface-2); border:1px solid var(--border); padding:5px 12px; border-radius:999px;">Bilingual UI: EN / PT-BR</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ===================== DEMO / SEE IT ===================== -->
+<section id="demo">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">See it</span>
+      <h2>The Check tab, mid-audit.</h2>
+      <p>
+        A faithful recreation of the plugin UI in the real brand palette. The left card shows
+        a live tone finding — before → after, the category and severity, and the cited
+        guideline excerpt that backs it. Swap either panel for a real screenshot before you present.
+      </p>
+    </div>
+
+    <div class="demo-grid">
+      <!-- MOCKUP: faithful plugin recreation -->
+      <div class="reveal">
+        <div class="plugin" role="img" aria-label="proofie plugin Check tab mockup showing a tone finding with before and after text and a cited guideline">
+          <div class="pl-header">
+            <span class="pl-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.6 3.6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="pl-word">proofie</span>
+            <nav class="pl-tabs">
+              <span class="pl-tab active">Check</span>
+              <span class="pl-tab">Guidelines</span>
+              <span class="pl-tab">Terms</span>
+              <span class="pl-tab">Settings</span>
+            </nav>
+            <span class="pl-spacer" aria-hidden="true"><span class="pl-dot-btn"></span><span class="pl-dot-btn"></span></span>
+          </div>
+
+          <div class="pl-body">
+            <div class="pl-subtabs">
+              <span class="pl-subtab active">Issues <span class="pl-subcount">7</span></span>
+              <span class="pl-subtab">Score</span>
+              <span class="pl-subtab">History</span>
+            </div>
+
+            <div class="pl-banner">
+              <b><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7.2l2.6 2.6L11.5 3.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Apply all 7 fixes</b>
+              <span>Rewrites every accepted suggestion in your frames</span>
+            </div>
+
+            <div class="pl-sevrow">
+              <span class="pl-sevpill"><span class="d" style="background:var(--p-sev-high)"></span>High · 2</span>
+              <span class="pl-sevpill"><span class="d" style="background:var(--p-sev-med)"></span>Med · 3</span>
+              <span class="pl-sevpill inactive"><span class="d" style="background:var(--p-sev-low)"></span>Low · 2</span>
+            </div>
+
+            <!-- the hero finding: a tone issue with a citation -->
+            <div class="pl-issue">
+              <span class="pl-bar" style="background:var(--p-sev-high)"></span>
+              <div class="pl-ibody">
+                <div class="pl-before">Oops! Something went wrong. Try again later lol</div>
+                <div class="pl-after">We couldn't save your changes. Check your connection and try again.</div>
+                <div class="pl-reason">Error messages should stay calm and explain the next step. "lol" and "Oops!" break the brand's reassuring, plain-spoken voice.</div>
+
+                <div class="pl-cite">
+                  <div class="lbl" aria-hidden="true">
+                    <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M3 2h6v8l-3-2-3 2V2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+                    Cited from your guideline
+                  </div>
+                  <div class="src"><span class="badge">U3</span>"Errors are calm and useful. Say what happened and what to do next. Never blame the user; never use slang."</div>
+                </div>
+
+                <div class="pl-meta">
+                  <span class="pl-catpill" style="background:var(--p-cat-tone)">Tone</span>
+                  <span class="pl-catpill" style="background:var(--p-sev-high)">High</span>
+                  <span class="pl-source" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.3"/><path d="M6 5.5V9M6 3.6v.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Error · "save-fail-toast"</span>
+                </div>
+
+                <div class="pl-actions">
+                  <span class="pl-apply"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.6 3.6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Apply fix</span>
+                  <span class="pl-undo">Dismiss</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- a second, collapsed-looking finding for context -->
+            <div class="pl-issue">
+              <span class="pl-bar" style="background:var(--p-sev-med)"></span>
+              <div class="pl-ibody">
+                <div class="pl-before">Login</div>
+                <div class="pl-after">Sign in</div>
+                <div class="pl-reason">"Login" appears 4× and "Sign in" 9× across this file. Glossary prefers "Sign in" as one word, used as a verb.</div>
+                <div class="pl-meta">
+                  <span class="pl-catpill" style="background:var(--p-cat-tone);background:#E08A2C">Consistency</span>
+                  <span class="pl-catpill" style="background:var(--p-sev-med)">Med</span>
+                  <span class="pl-source" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.3"/><path d="M6 5.5V9M6 3.6v.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Glossary term</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-caption">
+          <h3>Mockup · Check results</h3>
+          <p>Built in HTML/CSS with the plugin's exact tokens — accent <code style="font-family:var(--mono);font-size:0.9em;color:var(--accent-bright)">#2D9461</code>, warm-neutral surfaces, Geist type.</p>
+          <div class="tags"><span>before → after</span><span>cited evidence (U3)</span><span>severity bar</span><span>Apply fix</span></div>
+        </div>
+      </div>
+
+      <!-- DROP-IN SLOTS for real captures -->
+      <div class="reveal">
+        <!-- ===================================================================
+             SCREENSHOT DROP-IN SLOT  #1
+             Willian: replace this whole .dropin block with a real screenshot/GIF.
+             Example:
+               <img src="figma-plugin/assets/your-screenshot.png"
+                    alt="proofie running an audit in Figma"
+                    style="width:100%; border-radius:16px; border:1px solid var(--border); box-shadow:var(--shadow-lg);" />
+             A GIF works the same way (just point src at the .gif).
+             ================================================================== -->
+        <div class="dropin">
+          <div class="ic" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="8.5" cy="10" r="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M4 17l5-4 3 2.2 4-3.2 4 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <b>Drop in a real screenshot here</b>
+          <p class="hint">Replace this dashed box with a capture of proofie running on a real Figma file — the full plugin panel, mid-audit, works best.</p>
+          <code>&lt;img src="figma-plugin/assets/your-shot.png"&gt;</code>
+        </div>
+
+        <!-- ===================================================================
+             SCREENSHOT DROP-IN SLOT  #2  (optional — a GIF of Apply Fix in action)
+             ================================================================== -->
+        <div class="dropin" style="margin-top:var(--s5); min-height:200px;">
+          <div class="ic" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M5 4v16l14-8L5 4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+          <b>Optional: a GIF of "Apply fix"</b>
+          <p class="hint">A short loop of clicking <em>Apply fix</em> and the text updating live in the canvas is the most convincing moment of the demo.</p>
+          <code>&lt;img src="figma-plugin/assets/apply-fix.gif"&gt;</code>
+        </div>
+
+        <div class="demo-caption">
+          <h3>Your live captures go here</h3>
+          <p>Two clearly-labeled slots — see the HTML comments for the exact <code style="font-family:var(--mono);font-size:0.9em;color:var(--accent-bright)">&lt;img&gt;</code> snippet to paste.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ===================== TECH STACK ===================== -->
+<section id="stack">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Built with</span>
+      <h2>A lean, production-shaped stack.</h2>
+    </div>
+    <div class="stack-grid">
+      <div class="tech reveal">
+        <span class="logo" style="background:rgba(244,182,90,0.15);color:#F4B65A;" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="6" r="3" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="18" r="3" stroke="currentColor" stroke-width="2"/><circle cx="15" cy="12" r="3" stroke="currentColor" stroke-width="2"/><path d="M9 9v6M12 7.5L13.5 9M12 16.5L13.5 15" stroke="currentColor" stroke-width="2"/></svg></span>
+        <div><h4>Figma Plugin API</h4><p>Text extraction, context classification, in-place rewrites</p></div>
+      </div>
+      <div class="tech reveal">
+        <span class="logo" style="background:rgba(77,190,133,0.15);color:#4DBE85;" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M5 7l7-4 7 4v10l-7 4-7-4V7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+        <div><h4>Starlette · Python</h4><p>Async HTTP backend, <code style="font-family:var(--mono);font-size:0.85em;color:var(--accent-bright)">asyncio.gather</code> orchestration</p></div>
+      </div>
+      <div class="tech reveal">
+        <span class="logo" style="background:rgba(217,107,133,0.15);color:#D86B85;" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z" stroke="currentColor" stroke-width="2"/><path d="M8 12a4 4 0 018 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <div><h4>Claude Haiku</h4><p>Anthropic — 4 parallel audits + 1 rewrite pass, temp 0.2</p></div>
+      </div>
+      <div class="tech reveal">
+        <span class="logo" style="background:rgba(102,166,207,0.15);color:#66A6CF;" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="6" rx="8" ry="3" stroke="currentColor" stroke-width="2"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3" stroke="currentColor" stroke-width="2"/></svg></span>
+        <div><h4>Pinecone</h4><p>Vector DB — one index, cosine, category-tagged rows</p></div>
+      </div>
+      <div class="tech reveal">
+        <span class="logo" style="background:rgba(95,204,148,0.15);color:#5FCC94;" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 12h4l2-6 4 14 3-9 2 3h3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div><h4>Voyage AI</h4><p><code style="font-family:var(--mono);font-size:0.85em;color:var(--accent-bright)">voyage-3</code> embeddings, 1024-dim, for RAG</p></div>
+      </div>
+      <div class="tech reveal">
+        <span class="logo" style="background:rgba(244,182,90,0.15);color:#F4B65A;" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/><path d="M12 5a7 7 0 016 3.5M19 12a7 7 0 01-3.5 6M5 12a7 7 0 013-6M12 19a7 7 0 01-6-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <div><h4>Hugging Face Spaces</h4><p>Docker Space deploy — 4 secrets, free-tier demo hosting</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ===================== CURRICULUM (THE PROOF) ===================== -->
+<section id="curriculum">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Proof of learning</span>
+      <h2>Every Andela Accelerator module, shipped in one product.</h2>
+      <p>
+        proofie isn't a toy demo of one concept — it threads the whole curriculum into a
+        single working tool. Here's where each module lives in the codebase.
+      </p>
+    </div>
+
+    <div class="curr-intro reveal">
+      <div class="curr-stat"><b>12</b><span>curriculum modules applied</span></div>
+      <div class="curr-stat"><b>RAG</b><span>real embeddings + vector retrieval</span></div>
+      <div class="curr-stat"><b>MCP</b><span>tools, prompts &amp; resources via FastMCP</span></div>
+      <div class="curr-stat"><b>Secure</b><span>SSRF, injection &amp; hallucination guards</span></div>
+    </div>
+
+    <div class="curr-list">
+      <!-- 1 -->
+      <div class="curr-card reveal">
+        <div class="top"><span class="num">01</span><h3>MCP Basics &amp; Tool Integration</h3></div>
+        <p>The five audit functions are exposed as MCP tools, so any MCP client can call them — the same logic the plugin uses.</p>
+        <span class="where" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2L1 6l3 4M8 2l3 4-3 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> server.py · FastMCP</span>
+      </div>
+      <!-- 2 -->
+      <div class="curr-card reveal">
+        <div class="top"><span class="num">02</span><h3>API Keys &amp; Access Control</h3></div>
+        <p>Pydantic-validated environment config, loud startup warnings on missing keys, and a bring-your-own-key toggle in the plugin.</p>
+        <span class="where" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2L1 6l3 4M8 2l3 4-3 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> config.py · BYOK</span>
+      </div>
+      <!-- 3 -->
+      <div class="curr-card reveal">
+        <div class="top"><span class="num">03</span><h3>Host Your Own MCP Server</h3></div>
+        <p>An SSE transport runs the MCP server independently of the Figma backend — a self-hosted, real-time tool endpoint.</p>
+        <span class="where" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2L1 6l3 4M8 2l3 4-3 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> SSE transport · port 8000</span>
+      </div>
+      <!-- 4 -->
+      <div class="curr-card reveal">
+        <div class="top"><span class="num">04</span><h3>Extend the MCP Server</h3></div>
+        <p>Audit tools, prompt templates, and resources are all registered through FastMCP — a fully extended server, not just a stub.</p>
+        <span class="where" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2L1 6l3 4M8 2l3 4-3 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> tools + prompts + resources</span>
+      </div>
+      <!-- 5 -->
+      <div class="curr-card reveal">
+        <div class="top"><span class="num">05</span><h3>Vector Databases + RAG</h3></div>
+        <p>Real Voyage <code style="font-family:var(--mono);font-size:0.85em;color:var(--accent-bright)">voyage-3</code> embeddings (1024-dim) with Pinecone retrieval — plus a hash fallback for local dev. This is the grounding layer.</p>
+        <span class="where" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2L1 6l3 4M8 2l3 4-3 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> rag.py</span>
+      </div>
+      <!-- 6 -->
+      <div class="curr-card reveal">
+        <div class="top"><span class="num">06</span><h3>HTTP Integration</h3></div>
+        <p>The Figma plugin talks to the Starlette REST backend over a single <code style="font-family:var(--mono);font-size:0.85em;color:var(--accent-bright)">/api/wizard</code> endpoint — two independent processes over HTTP.</p>
+        <span class="where" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2L1 6l3 4M8 2l3 4-3 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> plugin ↔ Starlette</span>
+      </div>
+      <!-- 7 -->
+      <div class="curr-card reveal">
+        <div class="top"><span class="num">07</span><h3>Tool Agents with MCP</h3></div>
+        <p>A direct parallel orchestrator replaced the earlier tool-using agent loop — a deliberate design call for ~3–5× speedup on a fixed pipeline.</p>
+        <span class="where" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2L1 6l3 4M8 2l3 4-3 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> agent.py · run_audit()</span>
+      </div>
+      <!-- 8 -->
+      <div class="curr-card reveal">
+        <div class="top"><span class="num">08</span><h3>Python MCP Server</h3></div>
+        <p>The whole service is a clean, packaged Python module — config, tools, RAG, security, and server all separated by concern.</p>
+        <span class="where" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2L1 6l3 4M8 2l3 4-3 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> copycheck_mcp_server/</span>
+      </div>
+      <!-- 9 -->
+      <div class="curr-card reveal">
+        <div class="top"><span class="num">09</span><h3>Prompt Templates &amp; Resources</h3></div>
+        <p>Reusable prompt templates and MCP resources are defined as first-class modules — prompt engineering kept out of the call sites.</p>
+        <span class="where" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2L1 6l3 4M8 2l3 4-3 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> prompts.py · resources.py</span>
+      </div>
+      <!-- 10 -->
+      <div class="curr-card reveal">
+        <div class="top"><span class="num">10</span><h3>SSE Endpoints</h3></div>
+        <p>The MCP server runs an SSE transport for real-time, streamed tool calls — the live channel for MCP clients.</p>
+        <span class="where" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2L1 6l3 4M8 2l3 4-3 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> SSE transport</span>
+      </div>
+      <!-- 11 -->
+      <div class="curr-card reveal">
+        <div class="top"><span class="num">11</span><h3>MCP Security Risks</h3></div>
+        <p>SSRF protection, 11 prompt-injection patterns, input sanitization, SlowAPI rate limits, and per-finding hallucination guards.</p>
+        <span class="where" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2L1 6l3 4M8 2l3 4-3 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> security.py · tools.py</span>
+      </div>
+      <!-- 12 -->
+      <div class="curr-card reveal">
+        <div class="top"><span class="num">12</span><h3>GDPR &amp; Legal</h3></div>
+        <p>No PII stored in vectors, a bring-your-own-key pattern, and a single-user data scope — privacy designed in, not bolted on.</p>
+        <span class="where" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2L1 6l3 4M8 2l3 4-3 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg> no PII · BYOK · single-user</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ===================== CLOSING ===================== -->
+<section id="next" class="closing">
+  <div class="wrap">
+    <div class="closing-card reveal">
+      <span class="brand-mark lg" aria-hidden="true">
+        <svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.4 2.4L9.6 3.6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <h2><span class="pf">proofie</span> — your copy, sharpened.</h2>
+      <p>From a curriculum brief to a deployed Figma plugin that designers can actually use. Here's where it goes next.</p>
+
+      <div class="next-list">
+        <div class="next">
+          <div class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3l9 5v8l-9 5-9-5V8l9-5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 8v8M8 10v4M16 10v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <h4>Figma Community</h4>
+          <p>Submit proofie for public listing — bring-your-own-key as the access model, no server-side accounts.</p>
+        </div>
+        <div class="next">
+          <div class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 12l5 5L21 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 18h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <h4>Evals &amp; battle-testing</h4>
+          <p>A scored eval set across real design files to measure precision and catch regressions in the grounding guards.</p>
+        </div>
+        <div class="next">
+          <div class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c2.5 2.5 3.8 6 3.8 9S14.5 18.5 12 21" stroke="currentColor" stroke-width="2"/></svg></div>
+          <h4>More locales</h4>
+          <p>The i18n layer is one map per language — adding a locale is additive. EN and PT-BR ship today.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:var(--s7);">
+        <a class="btn btn-primary" href="#problem">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M4 6l4 4 4-4M3 13h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back to the top
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <p><span class="wordmark">proofie</span> — your copy, sharpened.</p>
+    <p style="margin-top:6px;">Built for the Andela Agentic AI Accelerator by <a href="https://github.com/wolivm">Willian Magalhães</a> · Thank you.</p>
+  </div>
+</footer>
+
+<script>
+  // Reveal-on-scroll — progressive enhancement only.
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
